@@ -115,7 +115,7 @@ void InitializeMessaging() {
 
 
 
-SKSEPluginLoad(const LoadInterface* skse) {
+void Empty(const LoadInterface* skse) {
     InitializeLogging();
 
 #ifdef _DEBUG
