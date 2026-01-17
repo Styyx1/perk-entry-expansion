@@ -21,7 +21,15 @@ configure_file(
         @ONLY)
 
 set(headers
-    )
+     "src/PerkEntryPointExtenderAPI.h"
+     "src/Utility.h"
+     "src/Offsets.h"
+     "src/Hooks.hpp"
+     "src/MerchantWares/Hooks.hpp"
+     "src/SpeechCheck/Hooks.hpp"
+     "src/MerchantWares/MerchantWares.hpp"
+     "src/SpeechCheck/SpeechCheck.hpp"
+ "src/MerchantWares/Hooks/Hook_ResetMerchantChest.h" "src/SpeechCheck/Hooks/Hook_TESCondition_IsTrue.h" "src/PerkEntries.h" "src/RE/StringSetting.h")
 
 set(sources
         src/main.cpp

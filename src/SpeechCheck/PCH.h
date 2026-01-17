@@ -119,14 +119,9 @@ using namespace REL::literals;
 
 namespace logger = SKSE::log;
 
-
-#include "xbyak/xbyak.h"
-
 #include "PerkEntryPointExtenderAPI.h"
-#include "Utility.h"
 
-
-
+constexpr std::array<int32_t, 4> version{ 1, 0, 0, 0 };
 
 namespace util {
     using SKSE::stl::report_and_fail;

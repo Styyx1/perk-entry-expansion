@@ -1,11 +1,10 @@
+#include "Hooks.h"
 
-#include "Offsets.h"
 using namespace SKSE;
 using namespace SKSE::log;
 using namespace SKSE::stl;
 
-//using namespace SOS;
-//using namespace RGL;
+
 
 void InitializeLogging()
 {
@@ -51,13 +50,47 @@ void InitializeLogging()
 #endif
 }
 
+using MsgCallback = void(int);
 
+template <std::convertible_to<const char*>... T>
+void TEST_CreateMessage(const char* a_message, MsgCallback* a_callback, std::uint32_t a_arg3, std::uint32_t a_arg4, std::uint32_t a_arg5, T... argz)
+{
+    //Args seems to be a va_list of strings ended with a null string (I think?), 
+    // arg3 seems to be the value of the first index, 
+    // callback is actually a void function that takes an int as a parameter
+    // arg 4 and arg 5 are still unknown
+
+    using func_t = decltype(&TEST_CreateMessage<T...>);
+    REL::Relocation<func_t> func{ RELOCATION_ID(51420, 52269) };
+    return func(a_message, a_callback, a_arg3, a_arg4, a_arg5, argz...);
+}
+
+void TestCallback(int result)
+{
+    
+
+    switch (result)
+    {
+    case 2:
+        return RE::DebugMessageBox("One choosen");
+        break;
+    case 3:
+        return RE::DebugMessageBox("Two choosen");
+        break;
+    case 4:
+        return RE::DebugMessageBox("Third choosen");
+        break;
+    case 5:
+        return RE::DebugMessageBox("Forth choosen");
+        break;
+    }
+}
 
 void InitializeMessaging() {
     if (!GetMessagingInterface()->RegisterListener([](MessagingInterface::Message* message) {
         switch (message->type) {
         case MessagingInterface::kPostLoad:
-
+            
             break;
             // It is now safe to do multithreaded operations, or operations against other plugins.
 
@@ -66,7 +99,11 @@ void InitializeMessaging() {
             break;
 
         case MessagingInterface::kDataLoaded:
+            SPCR::SpeechCheckHandler::Install();
+            break;
 
+        case MessagingInterface::kPostLoadGame:
+            TEST_CreateMessage("A message test", TestCallback, 2, 5, 4, "AAA", "BBBB", "C?", "D!", nullptr);
             break;
         }
         })) {
@@ -75,12 +112,13 @@ void InitializeMessaging() {
 }
 
 
+
+
+
 SKSEPluginLoad(const LoadInterface* skse) {
-
     InitializeLogging();
-#ifdef _DEBUG
 
-    
+#ifdef _DEBUG
 
     if (GetKeyState(VK_RCONTROL) & 0x800) {
         constexpr auto text1 = L"Request for debugger detected. If you wish to attach one and press Ok, do so now if not please press Cancel.";
@@ -103,6 +141,10 @@ SKSEPluginLoad(const LoadInterface* skse) {
 
 
     InitializeMessaging();
+    
+    //Gonna wanna move this.
+    SPCR::Hooks::Install();
+    
     
     log::info("{} has finished loading.", plugin->GetName());
     return true;
