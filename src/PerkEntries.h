@@ -15,4 +15,16 @@ namespace PEE
 		static inline constexpr RE::PerkEntryPoint perkEntry[2]{};//Temporary I need to figure it out.
 	}
 
+	namespace MACS
+	{
+		static inline constexpr auto perkCategory = "MagicApplySpell";
+		static inline constexpr RE::PerkEntryPoint perkEntry = RE::PerkEntryPoint::kApplyCombatHitSpell;
+	}
+
+	namespace PACS 
+	{
+		static inline constexpr auto perkCategory = "PotionApplySpell";
+		static inline constexpr RE::PerkEntryPoint perkEntry = RE::PerkEntryPoint::kApplyCombatHitSpell;
+	}
+
 }

@@ -1,6 +1,8 @@
 
 #include "Offsets.h"
 #include "MagicApplyCombatSpell/Hooks/Hook_MagicApplyCombatSpell.h"
+#include "PotionApplySpell/Hooks/PotionApplySpell.h"
+
 using namespace SKSE;
 using namespace SKSE::log;
 using namespace SKSE::stl;
@@ -101,8 +103,9 @@ SKSEPluginLoad(const LoadInterface* skse) {
     auto version = plugin->GetVersion();
     log::info("{} {} is loading...", plugin->GetName(), version);
     Init(skse);
-    SKSE::AllocTrampoline(800);
+    AllocTrampoline(800);
     PEE::ApplyHitMagicHitSpells::Patch();
+    PEE::Potion__ApplySpell::Patch();
 
     InitializeMessaging();
     

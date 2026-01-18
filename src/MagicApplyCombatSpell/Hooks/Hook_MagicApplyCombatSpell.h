@@ -1,4 +1,5 @@
 #pragma once 
+#include "PerkEntries.h"
 
 namespace PEE {
 	struct ApplyHitMagicHitSpells {
@@ -20,10 +21,8 @@ namespace PEE {
 			std::vector<RE::SpellItem*> sp_vec;
 			auto spell = a_proj->GetProjectileRuntimeData().spell ? skyrim_cast<RE::SpellItem*>(a_proj->GetProjectileRuntimeData().spell) : nullptr;
 
-			std::string_view cat = "MagicApplySpell";
 
-			auto entry = RE::PerkEntryPoint::kApplyCombatHitSpell;
-			RE::HandleEntryPoint(entry, caster, sp_vec, cat, spell, target);
+			RE::HandleEntryPoint(MACS::perkEntry, caster, sp_vec, MACS::perkCategory, spell, target);
 
 			if (sp_vec.empty())
 			{
