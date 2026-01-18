@@ -1,5 +1,6 @@
 
 #include "Offsets.h"
+#include "MagicApplyCombatSpell/Hooks/Hook_MagicApplyCombatSpell.h"
 using namespace SKSE;
 using namespace SKSE::log;
 using namespace SKSE::stl;
@@ -91,7 +92,7 @@ SKSEPluginLoad(const LoadInterface* skse) {
 
         do
         {
-            input = MessageBox(NULL, !input ? text1 : text2, caption, MB_OKCANCEL);
+            input = MessageBoxW(NULL, !input ? text1 : text2, caption, MB_OKCANCEL);
         } while (!IsDebuggerPresent() && input != IDCANCEL);
     }
 #endif
@@ -100,7 +101,8 @@ SKSEPluginLoad(const LoadInterface* skse) {
     auto version = plugin->GetVersion();
     log::info("{} {} is loading...", plugin->GetName(), version);
     Init(skse);
-
+    SKSE::AllocTrampoline(800);
+    PEE::ApplyHitMagicHitSpells::Patch();
 
     InitializeMessaging();
     
