@@ -22,7 +22,7 @@ namespace PEE {
 
 			if (sp_vec.empty())
 			{
-				logger::warn("Spell Vector for potions is empty");
+				logger::debug("Spell Vector for potions is empty");
 			}
 			else {
 				for (auto spell : sp_vec) {
