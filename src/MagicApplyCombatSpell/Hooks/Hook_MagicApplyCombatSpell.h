@@ -26,7 +26,7 @@ namespace PEE {
 
 			if (sp_vec.empty())
 			{
-				logger::warn("Spell Vector is empty");
+				logger::debug("Spell Vector is empty");
 			}
 			else {
 				for (auto spell : sp_vec) {
