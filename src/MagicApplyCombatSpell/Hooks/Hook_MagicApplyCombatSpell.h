@@ -23,7 +23,6 @@ namespace PEE {
 
 
 			RE::HandleEntryPoint(MACS::perkEntry, caster, sp_vec, MACS::perkCategory, spell, target);
-
 			if (sp_vec.empty())
 			{
 				logger::debug("Spell Vector is empty");
